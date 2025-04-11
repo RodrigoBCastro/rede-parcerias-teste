@@ -12,6 +12,8 @@ class ProductResponseDto
         private float $price,
         private string $category,
         private string $sku,
+        private \DateTime $createdAt,
+        private \DateTime $updatedAt,
     ) {
     }
 
@@ -50,16 +52,28 @@ class ProductResponseDto
         return $this->sku;
     }
 
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
     public function toArray(): array
     {
         return [
             'id' => $this->getId(),
-            'nome' => $this->getName(),
-            'descricao' => $this->getDescription(),
-            'quantidade' => $this->getQuantity(),
-            'preco' => $this->getPrice(),
-            'categoria' => $this->getCategory(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'quantity' => $this->getQuantity(),
+            'price' => $this->getPrice(),
+            'category' => $this->getCategory(),
             'sku' => $this->getSku(),
+            'createdAt' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
+            'updatedAt' => $this->getUpdatedAt()->format('Y-m-d H:i:s'),
         ];
     }
 }

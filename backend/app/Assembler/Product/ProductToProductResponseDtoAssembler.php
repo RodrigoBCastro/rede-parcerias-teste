@@ -17,6 +17,8 @@ class ProductToProductResponseDtoAssembler
             $product->price,
             $product->category,
             $product->sku,
+            $product->created_at,
+            $product->updated_at,
         );
     }
 }

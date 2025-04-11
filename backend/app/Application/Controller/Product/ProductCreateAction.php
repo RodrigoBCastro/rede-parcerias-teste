@@ -22,9 +22,12 @@ class ProductCreateAction
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="nome_produto", type="string", example="Notebook atualizado"),
-     *             @OA\Property(property="id_categoria_produto", type="integer", example=1),
-     *             @OA\Property(property="valor_produto", type="number", format="float", example=1299.99)
+     *             @OA\Property(property="name", type="string", example="Notebook"),
+     *             @OA\Property(property="description", type="string", example="Notebook 8GB de RAM"),
+     *             @OA\Property(property="quantity", type="number", format="integer", example=100)
+     *             @OA\Property(property="price", type="number", format="float", example=1299.99)
+     *             @OA\Property(property="category", type="string", example="Computadores e Acessorios")
+     *             @OA\Property(property="sku", type="string", example="ABCDE123456")
      *         )
      *     ),
      *     @OA\Response(response=201, description="Produto criado com sucesso")
@@ -32,7 +35,7 @@ class ProductCreateAction
      */
     public function __invoke(ProductRequest $request): JsonResponse
     {
-        $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request);
+        $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request->validated());
 
         return response()->json(
             ($this->productService)($productRequestDto)->toArray(), 201

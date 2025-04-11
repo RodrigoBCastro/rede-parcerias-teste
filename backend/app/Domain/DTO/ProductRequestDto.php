@@ -5,21 +5,21 @@ namespace App\Domain\DTO;
 class ProductRequestDto
 {
     public function __construct(
-        private string $name,
-        private string $description,
+        private ?string $name,
+        private ?string $description,
         private float $quantity,
-        private float $price,
-        private string $category,
-        private string $sku,
+        private ?float $price,
+        private ?string $category,
+        private ?string $sku,
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -29,30 +29,30 @@ class ProductRequestDto
         return $this->quantity;
     }
 
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function getSku(): string
+    public function getSku(): ?string
     {
         return $this->sku;
     }
 
     public function toArray(): array
     {
-        return [
-            'nome' => $this->getName(),
-            'descricao' => $this->getDescription(),
-            'quantidade' => $this->getQuantity(),
-            'preco' => $this->getPrice(),
-            'categoria' => $this->getCategory(),
+        return array_filter([
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'quantity' => $this->getQuantity(),
+            'price' => $this->getPrice(),
+            'category' => $this->getCategory(),
             'sku' => $this->getSku(),
-        ];
+        ], fn ($value) => !is_null($value));
     }
 }

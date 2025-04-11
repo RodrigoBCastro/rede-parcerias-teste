@@ -23,9 +23,12 @@ class ProductUpdateAction
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="nome_produto", type="string", example="Notebook atualizado"),
-     *             @OA\Property(property="id_categoria_produto", type="integer", example=1),
-     *             @OA\Property(property="valor_produto", type="number", format="float", example=1299.99)
+     * *             @OA\Property(property="name", type="string", example="Notebook Atualizado"),
+     * *             @OA\Property(property="description", type="string", example="Notebook 16GB de RAM"),
+     * *             @OA\Property(property="quantity", type="number", format="integer", example=300)
+     * *             @OA\Property(property="price", type="number", format="float", example=1279.99)
+     * *             @OA\Property(property="category", type="string", example="Computadores e Acessorios")
+     * *             @OA\Property(property="sku", type="string", example="ABCDE123456")
      *         )
      *     ),
      *     @OA\Response(response=200, description="Produto atualizado com sucesso")
@@ -33,7 +36,7 @@ class ProductUpdateAction
      */
     public function __invoke(ProductRequest $request, int $idProduct): JsonResponse
     {
-        $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request);
+        $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request->validated());
 
         return response()->json(
             ($this->productService)($idProduct, $productRequestDto)->toArray(), 201
