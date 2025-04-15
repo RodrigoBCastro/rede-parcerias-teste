@@ -35,9 +35,23 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $token = $request->bearerToken() ?? $request->session()->get('jwt_token');
+
+        if ($token && $user = auth('api')->setToken($token)->user()) {
+            return [
+                'auth' => [
+                    'user' => [
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'role' => $user->getRoleNames()->first(),
+                        'token' => $token,
+                    ],
+                ]
+            ];
+        }
+
         return [
-            ...parent::share($request),
-            //
+            'auth' => ['user' => null],
         ];
     }
 }

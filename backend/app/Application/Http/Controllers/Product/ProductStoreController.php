@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Controllers\Product;
 
-use App\Application\Requests\ProductRequest;
+use App\Application\Requests\ProductUpdateRequest;
 use App\Assembler\Product\ProductRequestToPessoaRequestDtoAssembler;
 use App\Domain\Services\Product\ProductCreateService;
 use App\Http\Controllers\Controller;
@@ -15,11 +15,11 @@ class ProductStoreController extends Controller
     ) {
     }
 
-    public function __invoke(ProductRequest $request): RedirectResponse
+    public function __invoke(ProductUpdateRequest $request): RedirectResponse
     {
         $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request->validated());
         ($this->productService)($productRequestDto);
 
-        return redirect()->route('Products.index')->with('success', 'Product criado com sucesso.');
+        return redirect()->route('products.index')->with('success', 'Product criado com sucesso.');
     }
 }

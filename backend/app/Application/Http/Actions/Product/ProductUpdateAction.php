@@ -2,7 +2,7 @@
 
 namespace App\Application\Http\Actions\Product;
 
-use App\Application\Requests\ProductRequest;
+use App\Application\Requests\ProductUpdateRequest;
 use App\Assembler\Product\ProductRequestToPessoaRequestDtoAssembler;
 use App\Domain\Services\Product\ProductUpdateService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,7 +34,7 @@ class ProductUpdateAction
      *     @OA\Response(response=200, description="Produto atualizado com sucesso")
      * )
      */
-    public function __invoke(ProductRequest $request, int $idProduct): JsonResponse
+    public function __invoke(ProductUpdateRequest $request, int $idProduct): JsonResponse
     {
         $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request->validated());
 

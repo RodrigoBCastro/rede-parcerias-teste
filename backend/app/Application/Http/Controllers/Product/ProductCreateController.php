@@ -2,14 +2,13 @@
 
 namespace App\Application\Http\Controllers\Product;
 
-use App\Application\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 
 class ProductCreateController extends Controller
 {
-    public function __invoke(ProductRequest $request)
+    public function __invoke()
     {
-        return Inertia::render('Products/Create');
+        return Inertia::render('Products/Form');
     }
 }
