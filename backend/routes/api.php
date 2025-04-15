@@ -12,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', UserJoinAction::class);
 Route::post('/register', UserCreateAction::class);
 
-Route::prefix('products')->group(function () {
-    Route::get('/', ProductGetAllAction::class);
-    Route::post('/', ProductCreateAction::class);
-    Route::get('/{products}', ProductGetByIdAction::class);
-    Route::put('/{products}', ProductUpdateAction::class);
-    Route::delete('/{products}', ProductDeleteAction::class);
+Route::middleware('auth:api')->prefix('products')->group(function () {
+    Route::get('/', ProductGetAllAction::class)->middleware('role:admin|operator|common');
+    Route::get('/{product}', ProductGetByIdAction::class)->middleware('role:admin|operator|common');
+
+    Route::put('/{product}', ProductUpdateAction::class)->middleware('role:admin|operator');
+
+    Route::post('/', ProductCreateAction::class)->middleware('role:admin');
+    Route::delete('/{product}', ProductDeleteAction::class)->middleware('role:admin');
 });

@@ -5,7 +5,7 @@ namespace App\Application\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ProductRequest extends FormRequest
+class ProductUpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -20,12 +20,7 @@ class ProductRequest extends FormRequest
             'quantity' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
             'category' => 'required|string|max:255',
-            'sku' => [
-                'required',
-                'string',
-                'max:30',
-                Rule::unique('products', 'sku')->ignore($this->route('product')->id),
-            ],
+            'sku' => 'required|string|max:30|unique:products,sku',
         ];
     }
 }
