@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Http\Actions\Product;
+namespace App\Application\Http\Actions\Product\v1;
 
 use App\Application\Requests\ProductUpdateRequest;
 use App\Assembler\Product\ProductRequestToPessoaRequestDtoAssembler;

@@ -5,42 +5,25 @@ import { Navigator, TableSearch, ListCards,} from "../../../components";
 import Layout from '../../../components/Layout';
 import {User} from "@/types/User";
 
-interface Product {
-    id: number
+interface ListUser {
     name: string
-    description: string
-    quantity: number
-    price: number
-    category: string
-    sku: string
+    role: string
+    email: string
 }
 
 interface Props {
     auth: {
         user: User
     }
-    products: Product[]
+    users: ListUser[]
 }
 
-export default function Products({ auth, products }: Props) {
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-    const [modalType, setModalType] = useState<'view' | 'delete' | null>(null)
-
+export default function Products({ auth, users }: Props) {
     const role = auth.user.role
     const canEdit = role === 'admin' || role === 'operator'
     const canRemove = role === 'admin'
 
-    const columns = ["name", "quantity", "category", "price", "sku"];
-
-    const openModal = (type: typeof modalType, product: Product) => {
-        setSelectedProduct(product)
-        setModalType(type)
-    }
-
-    const closeModal = () => {
-        setSelectedProduct(null)
-        setModalType(null)
-    }
+    const columns = ["name", "role", "email"];
 
     const actions = (item: Product) => {
         return (
@@ -56,9 +39,9 @@ export default function Products({ auth, products }: Props) {
                 )}
 
                 { canRemove && (
-                <button onClick={() => openModal('delete', item)} className="hover:text-indigo-950">
-                    <Trash />
-                </button>
+                    <button onClick={() => openModal('delete', item)} className="hover:text-indigo-950">
+                        <Trash />
+                    </button>
                 )}
             </div>
         )
@@ -71,7 +54,7 @@ export default function Products({ auth, products }: Props) {
 
         return (
             <button onClick={() => window.location.href = `/products/create`} className="flex justify-between gap-2 p-2 bg-indigo-500 text-white rounded hover:text-indigo-950">
-                <CirclePlus /> <span className="hidden sm:block">Create Product</span>
+                <CirclePlus /> Create Product
             </button>
         )
     }
@@ -81,17 +64,12 @@ export default function Products({ auth, products }: Props) {
         <>
             <Layout user={auth.user}>
                 <div className="block lg:hidden">
-                    <ListCards title={"Produtos"} columns={columns} data={products} actions={actions} createBtn={createBtn}></ListCards>
+                    <ListCards title={"Usuarios"} columns={columns} data={users}></ListCards>
                 </div>
                 <div className="hidden lg:block">
-                    <TableSearch title={"Produtos"} columns={columns} data={products} actions={actions} createBtn={createBtn}></TableSearch>
+                    <TableSearch title={"Usuarios"} columns={columns} data={users} isSearchable={false}></TableSearch>
                 </div>
             </Layout>
-            <ModalProducts
-                modalType={modalType}
-                selectedProduct={selectedProduct}
-                closeModal={closeModal}
-            />
         </>
     )
 }

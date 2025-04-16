@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Http\Actions\Product;
+namespace App\Application\Http\Actions\Product\v1;
 
 use App\Domain\Services\Product\ProductGetByIdService;
 use Symfony\Component\HttpFoundation\JsonResponse;

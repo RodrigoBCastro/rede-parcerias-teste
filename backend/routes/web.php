@@ -11,6 +11,7 @@ use App\Application\Http\Controllers\Product\ProductEditController;
 use App\Application\Http\Controllers\Product\ProductGetAllController;
 use App\Application\Http\Controllers\Product\ProductStoreController;
 use App\Application\Http\Controllers\Product\ProductUpdateController;
+use App\Application\Http\Controllers\User\UserGetAllController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', UserLoginController::class)->name('login');
@@ -19,13 +20,12 @@ Route::post('/login', UserJoinController::class)->name('auth');
 Route::get('/register', UserRegisterController::class)->name('register');
 Route::post('/register', UserCreateController::class)->name('create');
 
-Route::get('/logout', UserExitController::class)->name('logout');
+Route::post('/logout', UserExitController::class)->name('logout');
 
-//Route::middleware('auth:api')->group(function () {
     Route::get('/products', ProductGetAllController::class)->name('products.index');
     Route::get('/products/create', ProductCreateController::class)->name('products.create');
     Route::post('/products', ProductStoreController::class)->name('products.store');
     Route::delete('/products/{product}', ProductDeleteController::class)->name('products.delete');
     Route::get('/products/{product}/edit', ProductEditController::class)->name('products.edit');
     Route::put('/products/{product}', ProductUpdateController::class)->name('products.update');
-//});
+    Route::get('/users', UserGetAllController::class)->name('users.index');

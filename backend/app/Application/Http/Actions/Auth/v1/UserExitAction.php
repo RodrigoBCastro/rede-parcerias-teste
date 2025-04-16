@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Http\Actions\Auth;
+namespace App\Application\Http\Actions\Auth\v1;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
