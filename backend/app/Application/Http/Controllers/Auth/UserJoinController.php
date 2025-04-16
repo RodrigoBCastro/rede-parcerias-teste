@@ -5,7 +5,6 @@ namespace App\Application\Http\Controllers\Auth;
 use App\Application\Requests\LoginRequest;
 use App\Domain\Services\Auth\LoginService;
 use App\Http\Controllers\Controller;
-use Inertia\Inertia;
 
 class UserJoinController extends Controller
 {
@@ -19,6 +18,6 @@ class UserJoinController extends Controller
         $user = ($this->loginService)($request->validated());
         session(['jwt_token' => $user->getToken()]);
 
-        return Inertia::location(route('products.index'));
+        return redirect()->route('products.index');
     }
 }

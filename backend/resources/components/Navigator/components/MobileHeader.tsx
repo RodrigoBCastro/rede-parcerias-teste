@@ -13,7 +13,7 @@ export default function MobileHeader({ isOpen, toggleMenu }: MobileHeaderProps) 
       <button onClick={toggleMenu}>
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
-      <img className='sm:w-1/12 w-2/12 self-center' src={miniatura}></img>
+      <img className='max-w-10 self-center' src={miniatura}></img>
     </header>
   );
 }

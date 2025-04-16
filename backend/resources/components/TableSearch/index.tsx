@@ -7,13 +7,16 @@ import { Pagination } from "./components/Pagination";
 interface TableSearchProps extends TableProps {
   title: string;
   createBtn: any;
+  isSearchable: boolean;
 }
 
 export const TableSearch: React.FC<TableSearchProps> = ({
   title,
   columns,
   data,
-  actions, createBtn,
+  actions,
+  createBtn = null,
+  isSearchable = true,
   rowsPerPageOptions = [5, 10, 25],
 }) => {
   const {
@@ -29,10 +32,12 @@ export const TableSearch: React.FC<TableSearchProps> = ({
 
   return (
     <div className="lg:pt-10 space-y-4 shadow-md p-10 rounded-md">
-      <SearchBar title={title} search={search} createBtn={createBtn} onSearch={(v) => {
-        setSearch(v);
-        setCurrentPage(1);
-      }} />
+        {isSearchable && (
+            <SearchBar title={title} search={search} createBtn={createBtn} onSearch={(v) => {
+                setSearch(v);
+                setCurrentPage(1);
+            }} />
+        )}
 
       <TableContent columns={columns} data={paginatedData} actions={actions} />
 
