@@ -5,7 +5,6 @@ namespace App\Application\Http\Controllers\Auth;
 use App\Application\Requests\RegisterRequest;
 use App\Domain\Services\Auth\RegisterService;
 use App\Http\Controllers\Controller;
-use Inertia\Inertia;
 
 class UserCreateController extends Controller
 {
@@ -19,6 +18,6 @@ class UserCreateController extends Controller
         $user = ($this->registerService)($request->validated());
         session(['jwt_token' => $user->getToken()]);
 
-        return Inertia::location(route('products.index'));
+        return redirect()->route('products.index');
     }
 }
