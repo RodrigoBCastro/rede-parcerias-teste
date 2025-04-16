@@ -10,6 +10,7 @@ class UserToUserResponseDtoAssembler
     public function __invoke(User $user): UserResponseDto
     {
         return new UserResponseDto(
+            $user->id,
             $user->name,
             $user->getRoleNames()->first(),
             $user->email,
