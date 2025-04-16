@@ -4,6 +4,7 @@ namespace App\Domain\Services\User;
 
 use App\Assembler\Product\UserToUserResponseDtoAssembler;
 use App\Domain\Repositories\Contracts\UserRepositoryInterface;
+use App\Support\RoleVisibility;
 
 class UserGetAllService
 {
@@ -14,7 +15,11 @@ class UserGetAllService
 
     public function __invoke(): array
     {
-        $users = $this->userRepository->getAll();
+        $user = auth()->user();
+
+        $visibleRoles = RoleVisibility::visibleRolesFor($user->getRoleNames()->first());
+
+        $users = $this->userRepository->getAll($visibleRoles);
 
         return $users->map(fn($user) =>
             (new UserToUserResponseDtoAssembler())($user)->toArray()

@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import ModalProducts from '../../../components/ModalProducts';
+import ModalUser from '../../../components/ModalUser';
 import { Eye, Pencil, CirclePlus, Trash,} from "lucide-react";
 import { Navigator, TableSearch, ListCards,} from "../../../components";
 import Layout from '../../../components/Layout';
@@ -18,58 +18,44 @@ interface Props {
     users: ListUser[]
 }
 
-export default function Products({ auth, users }: Props) {
+export default function Users({ auth, users }: Props) {
     const role = auth.user.role
-    const canEdit = role === 'admin' || role === 'operator'
-    const canRemove = role === 'admin'
-
+    const [selectedUser, setSelectedUser] = useState<User | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const columns = ["name", "role", "email"];
 
-    const actions = (item: Product) => {
+    const openEditModal = (user) => {
+        setSelectedUser(user)
+        setIsModalOpen(true)
+    }
+
+    const actions = (item: User) => {
         return (
             <div className="flex gap-2 text-indigo-500">
-                <button onClick={() => openModal('view', item)} className="hover:text-indigo-950">
-                    <Eye />
+                <button
+                    onClick={() => openEditModal(item)} className="text-blue-600 hover:underline">
+                    <Pencil />
                 </button>
-
-                { canEdit && (
-                    <button onClick={() => window.location.href = `/products/${item.id}/edit`} className="hover:text-indigo-950">
-                        <Pencil />
-                    </button>
-                )}
-
-                { canRemove && (
-                    <button onClick={() => openModal('delete', item)} className="hover:text-indigo-950">
-                        <Trash />
-                    </button>
-                )}
             </div>
         )
     }
-
-    const createBtn = () => {
-        if (!canRemove) return (
-            <div></div>
-        );
-
-        return (
-            <button onClick={() => window.location.href = `/products/create`} className="flex justify-between gap-2 p-2 bg-indigo-500 text-white rounded hover:text-indigo-950">
-                <CirclePlus /> Create Product
-            </button>
-        )
-    }
-
 
     return (
         <>
             <Layout user={auth.user}>
                 <div className="block lg:hidden">
-                    <ListCards title={"Usuarios"} columns={columns} data={users}></ListCards>
+                    <ListCards title={"Usuarios"} columns={columns} data={users} actions={actions}></ListCards>
                 </div>
                 <div className="hidden lg:block">
-                    <TableSearch title={"Usuarios"} columns={columns} data={users} isSearchable={false}></TableSearch>
+                    <TableSearch title={"Usuarios"} columns={columns} data={users} actions={actions} isSearchable={false}></TableSearch>
                 </div>
             </Layout>
+            <ModalUser
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                user={selectedUser}
+                currentUserRole={role}
+            />
         </>
     )
 }
