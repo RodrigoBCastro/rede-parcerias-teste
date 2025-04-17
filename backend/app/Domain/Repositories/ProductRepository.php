@@ -3,7 +3,6 @@
 namespace App\Domain\Repositories;
 
 use App\Domain\Models\Product;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Domain\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -11,12 +10,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function getAll(): Collection
     {
-        return Product::orderBy('created_at', 'asc')->get();
-    }
-
-    public function getAllPaginated(int $perPage): LengthAwarePaginator
-    {
-        return Product::orderBy('created_at', 'asc')->paginate($perPage);
+        return Product::orderBy('id', 'asc')->get();
     }
 
     public function create(Product $product): Product
@@ -26,20 +20,20 @@ class ProductRepository implements ProductRepositoryInterface
         return $product;
     }
 
-    public function getByUuid(string $uuid): Product
+    public function getById(int $id): Product
     {
-        return Product::findOrFail($uuid);
+        return Product::findOrFail($id);
     }
 
-    public function update(string $uuid, array $data): Product
+    public function update(int $id, array $data): Product
     {
-        $product = Product::findOrFail($uuid);
+        $product = Product::findOrFail($id);
         $product->update($data);
         return $product;
     }
 
-    public function delete(string $uuid): bool
+    public function delete(int $id): bool
     {
-        return Product::destroy($uuid);
+        return Product::destroy($id);
     }
 }

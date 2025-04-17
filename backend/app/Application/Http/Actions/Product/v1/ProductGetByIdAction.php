@@ -21,10 +21,10 @@ class ProductGetByIdAction
      *     @OA\Response(response=200, description="Produto encontrado")
      * )
      */
-    public function __invoke(string $uuidProduct): JsonResponse
+    public function __invoke(int $idProduct): JsonResponse
     {
         return response()->json(
-            ($this->productService)($uuidProduct)->toArray()
+            ($this->productService)($idProduct)->toArray()
         );
     }
 }

@@ -11,8 +11,8 @@ class ProductDeleteService
     ) {
     }
 
-    public function __invoke(string $uuid): void
+    public function __invoke(int $id): void
     {
-        $this->productRepository->delete($uuid);
+        $this->productRepository->delete($id);
     }
 }

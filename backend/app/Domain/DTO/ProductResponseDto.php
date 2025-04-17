@@ -5,7 +5,7 @@ namespace App\Domain\DTO;
 class ProductResponseDto
 {
     public function __construct(
-        private string $uuid,
+        private int $id,
         private string $name,
         private string $description,
         private int $quantity,
@@ -17,9 +17,9 @@ class ProductResponseDto
     ) {
     }
 
-    public function getUuid(): string
+    public function getId(): int
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function getName(): string
@@ -65,7 +65,7 @@ class ProductResponseDto
     public function toArray(): array
     {
         return [
-            'uuid' => $this->getUuid(),
+            'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
             'quantity' => $this->getQuantity(),
