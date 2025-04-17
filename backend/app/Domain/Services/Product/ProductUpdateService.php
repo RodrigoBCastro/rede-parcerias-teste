@@ -14,9 +14,9 @@ class ProductUpdateService
     ) {
     }
 
-    public function __invoke(int $id, ProductRequestDto $productRequestDto): ProductResponseDto
+    public function __invoke(string $uuid, ProductRequestDto $productRequestDto): ProductResponseDto
     {
-        $product = $this->productRepository->update($id, $productRequestDto->toArray());
+        $product = $this->productRepository->update($uuid, $productRequestDto->toArray());
 
         return (new ProductToProductResponseDtoAssembler())($product);
     }

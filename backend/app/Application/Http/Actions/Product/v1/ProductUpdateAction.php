@@ -34,12 +34,12 @@ class ProductUpdateAction
      *     @OA\Response(response=200, description="Produto atualizado com sucesso")
      * )
      */
-    public function __invoke(ProductUpdateRequest $request, int $idProduct): JsonResponse
+    public function __invoke(ProductUpdateRequest $request, string $uuidProduct): JsonResponse
     {
         $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request->validated());
 
         return response()->json(
-            ($this->productService)($idProduct, $productRequestDto)->toArray(), 201
+            ($this->productService)($uuidProduct, $productRequestDto)->toArray(), 201
         );
     }
 }
