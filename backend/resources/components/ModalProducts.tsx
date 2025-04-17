@@ -47,8 +47,8 @@ export default function ModalProducts({ modalType, selectedProduct, closeModal }
             {modalType === 'view' && (
                 <div>
                     <p><strong>Descrição:</strong> {selectedProduct.description}</p>
-                    <p><strong>Quantidade:</strong> R$ {selectedProduct.quantity}</p>
-                    <p><strong>Preço:</strong> {selectedProduct.price}</p>
+                    <p><strong>Quantidade:</strong> {selectedProduct.quantity}</p>
+                    <p><strong>Preço:</strong> R$ {selectedProduct.price}</p>
                     <p><strong>Categoria:</strong> {selectedProduct.category}</p>
                     <p><strong>SKU:</strong> {selectedProduct.sku}</p>
                 </div>
@@ -59,7 +59,7 @@ export default function ModalProducts({ modalType, selectedProduct, closeModal }
                     <p>Tem certeza que deseja excluir <strong>{selectedProduct.name}</strong>?</p>
                     <button
                         onClick={() => {
-                            router.delete(`/products/${selectedProduct.id}`, {
+                            router.delete(`/products/${selectedProduct.uuid}`, {
                                 onFinish: closeModal,
                             })
                         }}

@@ -19,7 +19,7 @@ class ProductUpdateController extends Controller
     public function __invoke(ProductRequest $request, Product $product): RedirectResponse
     {
         $productRequestDto = (new ProductRequestToPessoaRequestDtoAssembler())($request->validated());
-        ($this->productService)($product->id, $productRequestDto);
+        ($this->productService)($product->uuid, $productRequestDto);
 
         return redirect()->route('products.index')->with('success', 'Produto deletado!');
     }

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Repositories\Contracts;
 
-use App\Models\User;
+use App\Domain\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 interface UserRepositoryInterface

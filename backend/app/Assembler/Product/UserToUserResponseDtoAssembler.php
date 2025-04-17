@@ -3,7 +3,7 @@
 namespace App\Assembler\Product;
 
 use App\Domain\DTO\UserResponseDto;
-use App\Models\User;
+use App\Domain\Models\User;
 
 class UserToUserResponseDtoAssembler
 {
