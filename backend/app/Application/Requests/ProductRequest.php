@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
                 'required',
                 'string',
                 'max:30',
-                Rule::unique('products', 'sku')->ignore($this->route('product')?->uuid, 'uuid'),
+                Rule::unique('products', 'sku')->ignore($this->route('product')->id),
             ],
         ];
     }

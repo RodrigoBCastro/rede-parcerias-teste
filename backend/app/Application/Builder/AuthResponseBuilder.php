@@ -3,7 +3,7 @@
 namespace App\Application\Builder;
 
 use App\Domain\DTO\AuthResponseDto;
-use App\Domain\Models\User;
+use App\Models\User;
 
 class AuthResponseBuilder
 {

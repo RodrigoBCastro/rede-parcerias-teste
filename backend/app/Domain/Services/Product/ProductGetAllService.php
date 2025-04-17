@@ -2,10 +2,8 @@
 
 namespace App\Domain\Services\Product;
 
-use App\Application\Builder\ProductPaginatedBuilder;
 use App\Assembler\Product\ProductToProductResponseDtoAssembler;
 use App\Domain\Repositories\Contracts\ProductRepositoryInterface;
-use Illuminate\Pagination\Paginator;
 
 class ProductGetAllService
 {
@@ -14,22 +12,12 @@ class ProductGetAllService
     ) {
     }
 
-    public function __invoke(int $perPage, int $page): array
+    public function __invoke(): array
     {
-        Paginator::currentPageResolver(fn () => $page);
+        $products = $this->productRepository->getAll();
 
-        $paginated = $this->productRepository->getAllPaginated($perPage);
-        $products = $paginated->getCollection();
-
-        $arrayProducts = $products->map(fn($product) =>
+        return $products->map(fn($product) =>
             (new ProductToProductResponseDtoAssembler())($product)->toArray()
         )->all();
-
-        return (new ProductPaginatedBuilder())(
-            $paginated->currentPage(),
-            $paginated->total(),
-            $paginated->lastPage(),
-            $arrayProducts
-        )->toArray();
     }
 }

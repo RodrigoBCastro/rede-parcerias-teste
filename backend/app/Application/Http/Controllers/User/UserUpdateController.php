@@ -3,8 +3,8 @@
 namespace App\Application\Http\Controllers\User;
 
 use App\Application\Requests\ChangeUserRequest;
-use App\Domain\Models\User;
 use App\Domain\Services\User\UserUpdateService;
+use App\Models\User;
 
 class UserUpdateController
 {

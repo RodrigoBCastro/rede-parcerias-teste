@@ -2,8 +2,8 @@
 
 namespace App\Domain\Services\User;
 
-use App\Domain\Models\User;
 use App\Domain\Repositories\Contracts\UserRepositoryInterface;
+use App\Models\User;
 use App\Support\RoleVisibility;
 use Illuminate\Auth\Access\AuthorizationException;
 

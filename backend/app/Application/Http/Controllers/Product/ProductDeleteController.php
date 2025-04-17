@@ -16,7 +16,7 @@ class ProductDeleteController extends Controller
 
     public function __invoke(Product $product): RedirectResponse
     {
-        ($this->productService)($product->uuid);
+        ($this->productService)($product->id);
 
         return redirect()->route('products.index')->with('success', 'Produto deletado!');
     }

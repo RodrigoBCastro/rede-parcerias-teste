@@ -3,19 +3,23 @@ import ModalProducts from '../../../components/ModalProducts';
 import { Eye, Pencil, CirclePlus, Trash,} from "lucide-react";
 import { Navigator, TableSearch, ListCards,} from "../../../components";
 import Layout from '../../../components/Layout';
-import { User } from "@/types/User";
-import { Product } from "@/types/Product";
+import {User} from "@/types/User";
+
+interface Product {
+    id: number
+    name: string
+    description: string
+    quantity: number
+    price: number
+    category: string
+    sku: string
+}
 
 interface Props {
     auth: {
         user: User
     }
-    products: {
-        page: number
-        totalResults: number
-        totalPages: number
-        products: Product[]
-    }
+    products: Product[]
 }
 
 export default function Products({ auth, products }: Props) {
@@ -46,7 +50,7 @@ export default function Products({ auth, products }: Props) {
                 </button>
 
                 { canEdit && (
-                    <button onClick={() => window.location.href = `/products/${item.uuid}/edit`} className="hover:text-indigo-950">
+                    <button onClick={() => window.location.href = `/products/${item.id}/edit`} className="hover:text-indigo-950">
                         <Pencil />
                     </button>
                 )}
@@ -77,18 +81,10 @@ export default function Products({ auth, products }: Props) {
         <>
             <Layout user={auth.user}>
                 <div className="block lg:hidden">
-                    <ListCards title={"Produtos"} columns={columns} data={products.products} actions={actions} createBtn={createBtn}></ListCards>
+                    <ListCards title={"Produtos"} columns={columns} data={products} actions={actions} createBtn={createBtn}></ListCards>
                 </div>
                 <div className="hidden lg:block">
-                    <TableSearch
-                        title="Produtos"
-                        columns={columns}
-                        data={products.products}
-                        currentPage={products.page}
-                        totalPages={products.totalPages}
-                        actions={actions}
-                        createBtn={createBtn}
-                    />
+                    <TableSearch title={"Produtos"} columns={columns} data={products} actions={actions} createBtn={createBtn}></TableSearch>
                 </div>
             </Layout>
             <ModalProducts
