@@ -4,7 +4,6 @@ namespace App\Domain\Services\Product;
 
 use App\Assembler\Product\ProductToProductResponseDtoAssembler;
 use App\Domain\DTO\ProductResponseDto;
-use App\Domain\Models\Product;
 use App\Domain\Repositories\Contracts\ProductRepositoryInterface;
 
 class ProductGetByIdService
@@ -14,9 +13,9 @@ class ProductGetByIdService
     ) {
     }
 
-    public function __invoke(int $id): ProductResponseDto
+    public function __invoke(string $uuid): ProductResponseDto
     {
-        $product = $this->productRepository->getById($id);
+        $product = $this->productRepository->getByUuid($uuid);
 
         return (new ProductToProductResponseDtoAssembler())($product);
     }

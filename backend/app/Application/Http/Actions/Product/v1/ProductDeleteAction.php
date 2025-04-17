@@ -21,9 +21,9 @@ class ProductDeleteAction
      *     @OA\Response(response=204, description="Produto excluído com sucesso")
      * )
      */
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(string $uuid): JsonResponse
     {
-        ($this->productService)($id);
+        ($this->productService)($uuid);
         return response()->json(null, 204);
 
     }
