@@ -10,7 +10,7 @@ class ProductToProductResponseDtoAssembler
     public function __invoke(Product $product): ProductResponseDto
     {
         return new ProductResponseDto(
-            $product->id,
+            $product->uuid,
             $product->name,
             $product->description,
             $product->quantity,

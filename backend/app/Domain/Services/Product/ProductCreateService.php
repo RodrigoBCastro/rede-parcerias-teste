@@ -19,6 +19,7 @@ class ProductCreateService
     {
         $product = (new ProductRequestDtoToProductAssembler())($productRequestDto);
 
+
         $this->productRepository->create($product);
 
         return (new ProductToProductResponseDtoAssembler())($product);
