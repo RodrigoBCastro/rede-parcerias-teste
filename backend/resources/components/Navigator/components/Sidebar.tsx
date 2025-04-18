@@ -38,11 +38,9 @@ export default function Sidebar({ isOpen = false, toggleMenu, isMobile = false }
                   ))}
               </nav>
           </div>
-          {isMobile && (
-              <button onClick={ () => router.post('/logout') } className={'p-2 bg-red-500 text-white shadow-sm hover:bg-red-700'}>
-                  Sair
-              </button>
-          )}
+          <button onClick={ () => router.post('/logout') } className={'p-2 bg-red-500 text-white shadow-sm hover:bg-red-700'}>
+              Sair
+          </button>
       </div>
     </div>
   );

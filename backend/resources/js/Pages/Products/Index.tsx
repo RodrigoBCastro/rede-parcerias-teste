@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import ModalProducts from '../../../components/ModalProducts';
 import { Eye, Pencil, CirclePlus, Trash,} from "lucide-react";
 import { Navigator, TableSearch, ListCards,} from "../../../components";
@@ -14,21 +14,20 @@ interface Props {
         page: number
         totalResults: number
         totalPages: number
-        products: Product[]
+        items: Product[]
     }
 }
 
 export default function Products({ auth, products }: Props) {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-    const [modalType, setModalType] = useState<'view' | 'delete' | null>(null)
+    const [modalType, setModalType] = useState<'create' | 'edit' | 'view' | 'delete' | null>(null)
 
     const role = auth.user.role
     const canEdit = role === 'admin' || role === 'operator'
     const canRemove = role === 'admin'
+    const columns = ["name", "quantity", "price", "sku"];
 
-    const columns = ["name", "quantity", "category", "price", "sku"];
-
-    const openModal = (type: typeof modalType, product: Product) => {
+    const openModal = (type: typeof modalType, product: Product | null) => {
         setSelectedProduct(product)
         setModalType(type)
     }
@@ -46,7 +45,7 @@ export default function Products({ auth, products }: Props) {
                 </button>
 
                 { canEdit && (
-                    <button onClick={() => window.location.href = `/products/${item.uuid}/edit`} className="hover:text-indigo-950">
+                    <button onClick={() => openModal('edit', item)} className="hover:text-indigo-950">
                         <Pencil />
                     </button>
                 )}
@@ -66,7 +65,7 @@ export default function Products({ auth, products }: Props) {
         );
 
         return (
-            <button onClick={() => window.location.href = `/products/create`} className="flex justify-between gap-2 p-2 bg-indigo-500 text-white rounded hover:text-indigo-950">
+            <button onClick={() => openModal('create', null)} className="flex justify-between gap-2 p-2 bg-indigo-500 text-white rounded hover:text-indigo-950">
                 <CirclePlus /> <span className="hidden sm:block">Create Product</span>
             </button>
         )
@@ -77,17 +76,27 @@ export default function Products({ auth, products }: Props) {
         <>
             <Layout user={auth.user}>
                 <div className="block lg:hidden">
-                    <ListCards title={"Produtos"} columns={columns} data={products.products} actions={actions} createBtn={createBtn}></ListCards>
+                    <ListCards
+                        title="Produtos"
+                        columns={columns}
+                        data={products.items}
+                        currentPage={products.page}
+                        totalPages={products.totalPages}
+                        actions={actions}
+                        createBtn={createBtn}
+                        paginationRoute="/products"
+                    />
                 </div>
                 <div className="hidden lg:block">
                     <TableSearch
                         title="Produtos"
                         columns={columns}
-                        data={products.products}
+                        data={products.items}
                         currentPage={products.page}
                         totalPages={products.totalPages}
                         actions={actions}
                         createBtn={createBtn}
+                        paginationRoute="/products"
                     />
                 </div>
             </Layout>
@@ -95,6 +104,7 @@ export default function Products({ auth, products }: Props) {
                 modalType={modalType}
                 selectedProduct={selectedProduct}
                 closeModal={closeModal}
+                role={auth.user.role}
             />
         </>
     )

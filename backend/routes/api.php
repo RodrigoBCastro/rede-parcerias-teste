@@ -25,6 +25,6 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::middleware('auth:api')->prefix('users')->group(function () {
-        Route::get('/', UserGetAllAction::class)->middleware('role:admin|operator|common');
+        Route::get('/', UserGetAllAction::class)->middleware('role:admin|operator');
     });
 });

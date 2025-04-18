@@ -1,9 +1,10 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 import ModalUser from '../../../components/ModalUser';
-import { Eye, Pencil, CirclePlus, Trash,} from "lucide-react";
-import { Navigator, TableSearch, ListCards,} from "../../../components";
+import { Pencil } from "lucide-react";
+import { TableSearch, ListCards } from "../../../components";
 import Layout from '../../../components/Layout';
 import {User} from "@/types/User";
+import {Product} from "@/types/Product";
 
 interface ListUser {
     name: string
@@ -15,7 +16,12 @@ interface Props {
     auth: {
         user: User
     }
-    users: ListUser[]
+    users: {
+        page: number
+        totalResults: number
+        totalPages: number
+        items: ListUser[]
+    }
 }
 
 export default function Users({ auth, users }: Props) {
@@ -44,10 +50,27 @@ export default function Users({ auth, users }: Props) {
         <>
             <Layout user={auth.user}>
                 <div className="block lg:hidden">
-                    <ListCards title={"Usuarios"} columns={columns} data={users} actions={actions}></ListCards>
+                    <ListCards
+                        title="Usuarios"
+                        columns={columns}
+                        data={users.items}
+                        currentPage={users.page}
+                        totalPages={users.totalPages}
+                        actions={actions}
+                        paginationRoute="/users"
+                    />
                 </div>
                 <div className="hidden lg:block">
-                    <TableSearch title={"Usuarios"} columns={columns} data={users} actions={actions} isSearchable={false}></TableSearch>
+                    <TableSearch
+                        title="Usuarios"
+                        columns={columns}
+                        data={users.items}
+                        currentPage={users.page}
+                        totalPages={users.totalPages}
+                        actions={actions}
+                        isSearchable={false}
+                        paginationRoute="/users"
+                    />
                 </div>
             </Layout>
             <ModalUser
