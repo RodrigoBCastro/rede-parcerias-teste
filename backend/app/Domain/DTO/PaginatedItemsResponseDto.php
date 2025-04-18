@@ -2,13 +2,13 @@
 
 namespace App\Domain\DTO;
 
-class ProductPaginatedResponseDto
+class PaginatedItemsResponseDto
 {
     public function __construct(
         private string $page,
         private string $totalResults,
         private string $totalPages,
-        private array $products,
+        private array $items,
     ) {
     }
 
@@ -27,9 +27,9 @@ class ProductPaginatedResponseDto
         return $this->totalPages;
     }
 
-    public function getProducts(): array
+    public function getItems(): array
     {
-        return $this->products;
+        return $this->items;
     }
 
 
@@ -39,7 +39,7 @@ class ProductPaginatedResponseDto
             'page' => $this->getPage(),
             'totalResults' => $this->getTotalResults(),
             'totalPages' => $this->getTotalPages(),
-            'products' => $this->getProducts(),
+            'items' => $this->getItems(),
         ];
     }
 }

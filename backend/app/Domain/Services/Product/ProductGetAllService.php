@@ -2,7 +2,7 @@
 
 namespace App\Domain\Services\Product;
 
-use App\Application\Builder\ProductPaginatedBuilder;
+use App\Application\Builder\PaginatedBuilder;
 use App\Assembler\Product\ProductToProductResponseDtoAssembler;
 use App\Domain\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Pagination\Paginator;
@@ -25,7 +25,7 @@ class ProductGetAllService
             (new ProductToProductResponseDtoAssembler())($product)->toArray()
         )->all();
 
-        return (new ProductPaginatedBuilder())(
+        return (new PaginatedBuilder())(
             $paginated->currentPage(),
             $paginated->total(),
             $paginated->lastPage(),

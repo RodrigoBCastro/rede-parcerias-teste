@@ -31,6 +31,6 @@ Route::middleware(['auth.jwt.web'])->group(function () {
     Route::get('/products/{product}/edit', ProductEditController::class)->name('products.edit');
     Route::put('/products/{product}', ProductUpdateController::class)->name('products.update');
     Route::get('/users', UserGetAllController::class)->name('users.index');
-    Route::get('/users', UserGetAllController::class)->name('users.index');
+    Route::get('/users', UserGetAllController::class)->middleware('role:admin|operator')->name('users.index');
     Route::put('/users/{user}/role', UserUpdateController::class)->name('users.update');
 });
